@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * {$className}
+ */
+class {$className} extends Teeple_ActionBase
+{literal}{
+
+    // 特定のメソッド時にValidationを実行したいときに定義。
+    //const VALIDATION_TARGET = "";
+    
+    // Validationを実行したいときに定義。(ex. sample/Validator.php)
+    //const VALIDATION_CONFIG = '';
+    
+    // Converterを実行したいときに定義。(ex. sample/Converter.php)
+    //const CONVERTER_CONFIG = '';
+    
+    /**
+     * 標準で実行されるメソッドです。
+     */
+    public function execute() {
+        return NULL;
+    }
+    
+    /**
+     * Validationエラー時の処理。
+     */
+    public function onValidateError() {
+        return NULL;
+    }
+
+}{/literal}
+
+?>

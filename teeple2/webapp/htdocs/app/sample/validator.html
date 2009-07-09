@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Validator</title>
+</head>
+<body>
+<h1>Validator</h1>
+
+{{assign var=messages value=$r->getAllErrorMessages()}}
+{{if count($messages) > 0}}
+<ul>
+{{foreach from=$messages item=message}}
+<li>{{$message|escape}}</li>
+{{/foreach}}
+</ul>
+{{/if}}
+<form method="post" action="validator.html">
+<table>
+<tr>
+<td>Required/Integer:</td><td><input type="text" name="integerText" value="{{$a->integerText}}" /></td>
+</tr>
+<tr>
+<td>Mask(\d{3}-\d{4}):</td><td><input type="text" name="maskText" value="{{$a->maskText}}" /></td>
+</tr>
+<tr>
+<td>Length(3-10):</td><td><input type="text" name="lengthText" value="{{$a->lengthText}}" /></td>
+</tr>
+<tr>
+<td>Minlength(3):</td><td><input type="text" name="minlengthText" value="{{$a->minlengthText}}" /></td>
+</tr>
+<tr>
+<td>Minbytelength(3):</td><td><input type="text" name="minbytelengthText" value="{{$a->minbytelengthText}}" /></td>
+</tr>
+<tr>
+<td>Maxlength(10):</td><td><input type="text" name="maxlengthText" value="{{$a->maxlengthText}}" /></td>
+</tr>
+<tr>
+<td>Maxbytelength(10):</td><td><input type="text" name="maxbytelengthText" value="{{$a->maxbytelengthText}}" /></td>
+</tr>
+<tr>
+<td>Numeric:</td><td><input type="text" name="numericText" value="{{$a->numericText}}" /></td>
+</tr>
+<tr>
+<td>Range(8.9-14.5):</td><td><input type="text" name="rangeText" value="{{$a->rangeText}}" /></td>
+</tr>
+<tr>
+<td>Email:</td><td><input type="text" name="emailText" value="{{$a->emailText}}" /></td>
+</tr>
+<tr>
+<td>Strptime(%Y/%m/%d)<br/>※Windows未実装</td><td><input type="text" name="strptimeText" value="{{$a->strptimeText}}" /></td>
+</tr>
+<tr>
+<td>Datearray:</td><td>
+<input type="text" name="datearrayText[0]" value="{{$a->datearrayText[0]}}" size="5" />/
+<input type="text" name="datearrayText[1]" value="{{$a->datearrayText[1]}}" size="3" />/
+<input type="text" name="datearrayText[2]" value="{{$a->datearrayText[2]}}" size="3" /></td>
+</tr>
+<tr>
+<td>Datehash:</td><td>{{html_select_date
+    prefix=''  
+    field_array='datehashText' 
+    reverse_years=true 
+    field_order='YMD' 
+    field_separator='/'
+    start_year='-10'
+    month_format='%m'
+    }}</td>
+</tr> 
+<tr>
+<td>Datetimehash:</td><td>{{html_select_date
+    prefix='' 
+    field_array='datetimehashText'
+    field_order='YMD' 
+    field_separator='/'
+    month_format='%m'
+    year_as_text=true
+    month_empty='-'
+    day_empty='-'
+    }}
+{{html_select_time
+    prefix='' 
+    field_array='datetimehashText'
+    }}
+</td>
+</tr>
+<tr> 
+<td>Timehash:</td><td>{{html_select_time prefix='' field_array='timehashText'}}</td>
+</tr>
+<tr> 
+<td>Equal(to Email):</td><td><input type="text" name="equalText" value="{{$a->equalText}}" /></td>
+</tr>
+</table>
+<input type="submit" name="action:doHoge" value="submit"/>
+</form>
+</body>
+</html>

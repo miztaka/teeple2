@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Converter</title>
+</head>
+<body>
+<h1>Converter</h1>
+
+{{assign var=messages value=$r->getAllErrorMessages()}}
+{{if count($messages) > 0}}
+<ul>
+{{foreach from=$messages item=message}}
+<li>{{$message|escape}}</li>
+{{/foreach}}
+</ul>
+{{/if}}
+<form method="post" action="converter.html">
+<table border="1">
+<tr>
+<td>Trim:</td><td><input type="text" name="trimText" value="{{$a->trimText}}" /></td>
+<td><pre>"{{$a->trimText}}"</pre></td>
+</tr>
+<tr>
+<td>Datearray:</td>
+<td><input type="text" name="datearrayText[0]" value="{{$a->datearrayText[0]}}" size="5" />年
+<input type="text" name="datearrayText[1]" value="{{$a->datearrayText[1]}}" size="3" />月
+<input type="text" name="datearrayText[2]" value="{{$a->datearrayText[2]}}" size="3" />日
+</td>
+<td><pre>"{{$a->datearrayStr}}"</pre></td>
+</tr>
+<tr>
+<td>Datetimehash:</td>
+<td>{{html_select_date
+    prefix='' 
+    field_array='datetimehashText'
+    field_order='YMD' 
+    field_separator='/'
+    month_format='%m'
+    year_as_text=true
+    month_empty='-'
+    day_empty='-'
+    }}
+{{html_select_time
+    prefix='' 
+    field_array='datetimehashText'
+    }}
+</td>
+<td><pre>"{{$a->datetimehashStr}}"</pre></td>
+</tr>
+<tr> 
+<td>Timehash:</td>
+<td>{{html_select_time prefix='' field_array='timehashText'}}</td>
+<td><pre>"{{$a->timehashStr}}"</pre></td>
+</tr>
+<tr>
+<td>Tel:</td>
+<td><input type="text" name="telText[0]" value="{{$a->telText[0]}}" size="5" />-
+<input type="text" name="telText[1]" value="{{$a->telText[1]}}" size="5" />-
+<input type="text" name="telText[2]" value="{{$a->telText[2]}}" size="5" />
+</td>
+<td><pre>"{{$a->telStr}}"</pre></td>
+</tr>
+<tr>
+<td>Zip:</td>
+<td><input type="text" name="zipText[0]" value="{{$a->zipText[0]}}" size="3" />-
+<input type="text" name="zipText[1]" value="{{$a->zipText[1]}}" size="4" />
+</td>
+<td><pre>"{{$a->zipStr}}"</pre></td>
+</tr>
+<tr>
+<td>Hiragana:</td>
+<td><input type="text" name="hiraganaText" value="{{$a->hiraganaText}}" /></td>
+<td><pre>"{{$a->hiraganaText}}"</pre></td>
+</tr>
+<tr>
+<td>Katakana:</td>
+<td><input type="text" name="katakanaText" value="{{$a->katakanaText}}" /></td>
+<td><pre>"{{$a->katakanaText}}"</pre></td>
+</tr>
+<tr>
+<td>Hankatakana:</td>
+<td><input type="text" name="hankatakanaText" value="{{$a->hankatakanaText}}" /></td>
+<td><pre>"{{$a->hankatakanaText}}"</pre></td>
+</tr>
+
+</table>
+<input type="submit" name="action:doHoge" value="submit"/>
+</form>
+</body>
+</html>
