@@ -16,28 +16,21 @@
  */
 
 /**
- * 値がセットされているかどうかをチェックします。
+ * TINYINT型であるかどうかをチェックします。
  *
  * @package teeple.validator
  */
-class Teeple_Validator_Required extends Teeple_Validator
+class Teeple_Validator_Tinyint extends Teeple_Validator
 {
 
     protected function execute($obj, $fieldName) {
         
         $value = $this->getTargetValue($obj, $fieldName);
-        if (is_array($value)) {
-            foreach($value as $key => $val) {
-                if (Teeple_Util::isBlank($val)) {
-                    return FALSE;
-                }
-            }
-        } else {
-            if (Teeple_Util::isBlank($value)) {
-                return FALSE;
-            }
+        if (Teeple_Util::isBlank($value)) {
+            return TRUE;
         }
-        return TRUE;
+        
+        return preg_match('/^[+-]?[0-9]*$/', $value) && intval($value) < 128;
     }
     
 }

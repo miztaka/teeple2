@@ -26,7 +26,7 @@ class Teeple_Request
      * POT/GETで受け取った値を保持する
      * @var array
      */
-    var $_params;
+    private $_params;
     
     /**
      * @var array
@@ -43,6 +43,24 @@ class Teeple_Request
      */
     private $actionMethod;
     
+    /**
+     * Actionの実行が完了したかどうか
+     * @var boolean
+     */
+    private $completeActionFlg = FALSE;
+    
+    /**
+     * Responseの返却が完了したかどうか
+     * @var boolean
+     */
+    private $completeResponseFlg = FALSE;
+    
+    /**
+     * 
+     * @var boolean
+     */
+    public $isRedirect = FALSE;
+        
     /**
      * @var Logger
      */
@@ -235,6 +253,45 @@ class Teeple_Request
     public function setActionMethod($method) {
         $this->actionMethod = $method;
     }
+    
+    
+    /**
+     * Actionの完了をセットします。 
+     *
+     */
+    public function completeAction() {
+        $this->completeActionFlg = TRUE;
+    }
+    
+    /**
+     * Responseの完了をセットします。
+     *
+     */
+    public function completeResponse() {
+        $this->completeActionFlg = TRUE;
+        $this->completeResponseFlg = TRUE;
+    }
+    
+    /**
+     * Actionが完了したかどうか？
+     * @return boolean
+     */
+    public function isCompleteAction() {
+        return $this->completeActionFlg;
+    }
+    
+    /**
+     * Responseが完了したかどうか？
+     * @return boolean
+     */
+    public function isCompleteResponse() {
+        return $this->completeResponseFlg;
+    }
+    
+    public function resetCompleteFlag() {
+        $this->completeActionFlg = FALSE;
+        $this->completeResponseFlg = FALSE;
+    }    
 
 }
 ?>

@@ -75,6 +75,7 @@ class Teeple_Session
 
     /**
      * セッション処理を開始
+     * TODO regenerateするとブラウザバックとかしたときにおかしくなるのでコメントアウト
      */
     public function start() {
 
@@ -82,7 +83,7 @@ class Teeple_Session
             @ini_set('session.use_trans_sid','1');
         }
         @session_start();
-        @session_regenerate_id(true);
+        //@session_regenerate_id(true);
     }
 
     /**

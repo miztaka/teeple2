@@ -45,17 +45,6 @@ class Teeple_FilterChain
      */
     protected $log;
     
-    /**
-     * Actionの実行が完了したかどうか
-     * @var boolean
-     */
-    protected $completeActionFlg = FALSE;
-    
-    /**
-     * Responseの返却が完了したかどうか
-     * @var boolean
-     */
-    protected $completeResponseFlg = FALSE;
     
     /**
      * @var Teeple_Container
@@ -65,6 +54,14 @@ class Teeple_FilterChain
         $this->container = $c;
     }
     
+    /**
+     * @var Teeple_Request
+     */
+    private $request;
+    public function setComponent_Teeple_Request($c) {
+        $this->request = $c;
+    }
+        
     /**
      * コンストラクタ
      *
@@ -149,7 +146,7 @@ class Teeple_FilterChain
         $this->log->debug("FilterChainをセットアップします。");
         
         $config = Teeple_Util::readIniFile($configfile);
-        $this->log->debug(var_export($config, true));
+        //$this->log->debug(var_export($config, true));
         if (is_array($config)) {
             foreach ($config as $section => $value_ar) {
                 // フィルタ名とエイリアス名を取得
@@ -199,20 +196,19 @@ class Teeple_FilterChain
     }
     
     /**
-     * Actionの完了をセットします。 TODO ここ？Requestでは？
+     * Actionの完了をセットします。
      *
      */
     public function completeAction() {
-        $this->completeActionFlg = TRUE;
+        $this->request->completeAction();
     }
     
     /**
-     * Responseの完了をセットします。TODO ここ？Requestでは？
+     * Responseの完了をセットします。
      *
      */
     public function completeResponse() {
-        $this->completeActionFlg = TRUE;
-        $this->completeResponseFlg = TRUE;
+        $this->request->completeResponse();
     }
     
     /**
@@ -220,7 +216,7 @@ class Teeple_FilterChain
      * @return boolean
      */
     public function isCompleteAction() {
-        return $this->completeActionFlg;
+        return $this->request->isCompleteAction();
     }
     
     /**
@@ -228,7 +224,7 @@ class Teeple_FilterChain
      * @return boolean
      */
     public function isCompleteResponse() {
-        return $this->completeResponseFlg;
+        return $this->request->isCompleteResponse();
     }
     
 }

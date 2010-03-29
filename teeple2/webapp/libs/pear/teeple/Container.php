@@ -122,7 +122,6 @@ class Teeple_Container
             $component = $this->_components[$name];
         } else {
             $component = $this->_createComponent($name);
-            $this->register($name, $component);
         }
         
         return $component;
@@ -144,7 +143,7 @@ class Teeple_Container
             $component = $_SESSION[self::SESSION_KEY][$name];
         } else {
             $this->log->debug("セッションに存在しないので作成します。");
-            $component = $this->_createComponent($name);
+            $component = $this->_createComponent($name, FALSE);
             $_SESSION[self::SESSION_KEY][$name] = $component;
         }
         
@@ -158,7 +157,7 @@ class Teeple_Container
      * @return Object
      */
     public function getPrototype($name) {
-        return $this->_createComponent($name);
+        return $this->_createComponent($name, FALSE);
     }
 
     /**
@@ -183,7 +182,7 @@ class Teeple_Container
      * @param string $name
      * @return Object
      */
-    private function _createComponent($name) {
+    private function _createComponent($name, $register=TRUE) {
         
         $this->log->debug("コンポーネント {$name} を作成します。");
 
@@ -197,6 +196,9 @@ class Teeple_Container
             throw new Teeple_Exception("クラス{$className}の定義が存在しません。");
         }
         $instance = new $className();
+        if ($register) {
+            $this->register($name, $instance);
+        }
         
         // 自動インジェクション
         $methods = get_class_methods($className);

@@ -16,28 +16,15 @@
  */
 
 /**
- * 値がセットされているかどうかをチェックします。
+ * 全角英数字を半角に変換する
  *
- * @package teeple.validator
+ * @package teeple.converter
  */
-class Teeple_Validator_Required extends Teeple_Validator
+class Teeple_Converter_Alnum extends Teeple_Converter_MbConvertBase
 {
-
-    protected function execute($obj, $fieldName) {
-        
-        $value = $this->getTargetValue($obj, $fieldName);
-        if (is_array($value)) {
-            foreach($value as $key => $val) {
-                if (Teeple_Util::isBlank($val)) {
-                    return FALSE;
-                }
-            }
-        } else {
-            if (Teeple_Util::isBlank($value)) {
-                return FALSE;
-            }
-        }
-        return TRUE;
+    
+    protected function convertMethod($value) {
+        return mb_convert_kana($value, "a", INTERNAL_CODE);
     }
     
 }

@@ -30,7 +30,7 @@ class Teeple_Validator_Integer extends Teeple_Validator
             return TRUE;
         }
         
-        return preg_match('/^[0-9]*$/', $value) && $value <= PHP_INT_MAX;
+        return preg_match('/^[+-]?[0-9]*$/', $value) && $value <= PHP_INT_MAX;
     }
     
 }

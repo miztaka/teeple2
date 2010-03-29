@@ -4,11 +4,11 @@ require_once 'creole/Creole.php';
 
 /* fix $dsn, $datasource, $outputdir to suit your environment */
 $dsn = array('phptype' => 'mysql',
-             'hostspec' => '192.168.100.2',
-             'username' => 'mt_mailbox',
-             'password' => 'mt_mailbox',
-             'database' => 'mt_mailbox');
-$datasource = "mt_mailbox";
+             'hostspec' => 'localhost',
+             'username' => 'default',
+             'password' => 'default',
+             'database' => 'default');
+$datasource = "default";
 $outputdir = dirname(__FILE__)."/../../../../components/entity";
 
 /*
@@ -17,7 +17,8 @@ $outputdir = dirname(__FILE__)."/../../../../components/entity";
 $conn = Creole::getConnection($dsn);
 $dbinfo = $conn->getDatabaseInfo();
 
-if (! mkdir($outputdir .'/'. 'base')) {
+$base_dir = $outputdir .'/'. 'base';
+if (! file_exists($base_dir) && ! mkdir($base_dir)) {
     print "could not make directory for base: {$outputdir}";
     exit;
 }
@@ -67,7 +68,8 @@ foreach($dbinfo->getTables() as $tbl) {
             
             $refs = $fk->getReferences();
             if (is_array($refs)) {
-                $alias = strtolower($fk->getName());
+                //$alias = strtolower($fk->getName());
+                $alias = strtolower($refs[0][1]->getTable()->getName());
                 $entity = 'Entity_'. ucfirst(strtolower($refs[0][1]->getTable()->getName()));
                 $aliases[] = array(
                     'name' => $alias,
@@ -185,7 +187,7 @@ class {$baseclassname} extends Teeple_ActiveRecord
      * 
      * @var bool 
      */
-    public static \$_AUTO = FALSE;
+    public static \$_AUTO = TRUE;
 
 }
 EOT;

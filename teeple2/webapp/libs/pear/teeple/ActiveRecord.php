@@ -16,7 +16,7 @@
  */
 
 /**
- * exception class for TeepleActiveRecord.
+ * exception class for Teeple_ActiveRecord.
  * 
  * @package teeple
  * 
@@ -203,8 +203,19 @@ class Teeple_ActiveRecord
     }
 
     /**
+     * このクラスの新しいインスタンスを返します。
+     * @return Teeple_ActiveRecord
+     */
+    public function newInstance()
+    {
+        $class_name = get_class($this);
+        $obj = new $class_name($this->_pdo);
+        return $obj;
+    }
+
+    /**
      * 制約を設定します。
-     * TODO この機能は必要？
+     * この機能は必要？ -> 必要 楽観的排他制御などに使う
      * 
      * @param string $name カラム名称
      * @param mixed $value カラム値
@@ -244,7 +255,7 @@ class Teeple_ActiveRecord
      * @param mixed $aliasname エイリアス名
      * @param string $condition 追加する条件
      * @param string $params 可変長引数($condition)
-     * @return TeepleActiveRecord
+     * @return Teeple_ActiveRecord
      */
     public function join() {
         
@@ -307,7 +318,7 @@ class Teeple_ActiveRecord
      * 
      * @param String Where句です。プレースホルダーに?を使用します。カラム名は、エイリアス名.カラム名で指定します。(主テーブルのエイリアスは 'base'を指定します。)
      * @param mixed プレースホルダーにセットする値です。複数ある場合は１つの配列を渡してもよいし、複数の引数として渡してもよいです。
-     * @return TeepleActiveRecord
+     * @return Teeple_ActiveRecord
      */
     public function where() {
         
@@ -345,11 +356,11 @@ class Teeple_ActiveRecord
      * @param string $property プロパティ名
      * @param mixed $value 値
      * @param boolean $notnullonly NULLチェックフラグ 
-     * @return TeepleActiveRecord
+     * @return Teeple_ActiveRecord
      */
     public function eq($property, $value, $notnullonly=true) {
         
-        if ($value == NULL || $value == "") {
+        if ($value === NULL || $value === "") {
             if (! $notnullonly) {
                 $this->where("{$property} IS NULL");
             }
@@ -370,11 +381,11 @@ class Teeple_ActiveRecord
      * @param string $property プロパティ名
      * @param mixed $value 値
      * @param boolean $notnullonly NULLチェックフラグ 
-     * @return TeepleActiveRecord
+     * @return Teeple_ActiveRecord
      */
     public function ne($property, $value, $notnullonly=true) {
         
-        if ($value == NULL || $value == "") {
+        if ($value === NULL || $value === "") {
             if (! $notnullonly) {
                 $this->where("{$property} IS NOT NULL");
             }
@@ -393,11 +404,11 @@ class Teeple_ActiveRecord
      * 
      * @param string $property プロパティ名
      * @param mixed $value 値
-     * @return TeepleActiveRecord
+     * @return Teeple_ActiveRecord
      */
     public function lt($property, $value) {
         
-        if ($value == NULL || $value == "") {
+        if ($value === NULL || $value === "") {
             // do nothing
         } else {
             $this->where("{$property} < ?", $value);
@@ -414,11 +425,11 @@ class Teeple_ActiveRecord
      * 
      * @param string $property プロパティ名
      * @param mixed $value 値
-     * @return TeepleActiveRecord
+     * @return Teeple_ActiveRecord
      */
     public function gt($property, $value) {
         
-        if ($value == NULL || $value == "") {
+        if ($value === NULL || $value === "") {
             // do nothing
         } else {
             $this->where("{$property} > ?", $value);
@@ -435,11 +446,11 @@ class Teeple_ActiveRecord
      * 
      * @param string $property プロパティ名
      * @param mixed $value 値
-     * @return TeepleActiveRecord
+     * @return Teeple_ActiveRecord
      */
     public function le($property, $value) {
         
-        if ($value == NULL || $value == "") {
+        if ($value === NULL || $value === "") {
             // do nothing
         } else {
             $this->where("{$property} <= ?", $value);
@@ -456,11 +467,11 @@ class Teeple_ActiveRecord
      * 
      * @param string $property プロパティ名
      * @param mixed $value 値
-     * @return TeepleActiveRecord
+     * @return Teeple_ActiveRecord
      */
     public function ge($property, $value) {
         
-        if ($value == NULL || $value == "") {
+        if ($value === NULL || $value === "") {
             // do nothing
         } else {
             $this->where("{$property} >= ?", $value);
@@ -477,7 +488,7 @@ class Teeple_ActiveRecord
      * 
      * @param string $property プロパティ名
      * @param array $value 値
-     * @return TeepleActiveRecord
+     * @return Teeple_ActiveRecord
      */
     public function in($property, $value) {
         
@@ -505,7 +516,7 @@ class Teeple_ActiveRecord
      * 
      * @param string $property プロパティ名
      * @param array $value 値
-     * @return TeepleActiveRecord
+     * @return Teeple_ActiveRecord
      */
     public function notin($property, $value) {
         
@@ -533,11 +544,11 @@ class Teeple_ActiveRecord
      * 
      * @param string $property プロパティ名
      * @param mixed $value 値
-     * @return TeepleActiveRecord
+     * @return Teeple_ActiveRecord
      */
     public function like($property, $value) {
         
-        if ($value == NULL || $value == "") {
+        if ($value === NULL || $value === "") {
             // do nothing
         } else {
             $this->where("{$property} LIKE ?", $value);
@@ -555,11 +566,11 @@ class Teeple_ActiveRecord
      * 
      * @param string $property プロパティ名
      * @param mixed $value 値
-     * @return TeepleActiveRecord
+     * @return Teeple_ActiveRecord
      */
     public function starts($property, $value) {
         
-        if ($value == NULL || $value == "") {
+        if ($value === NULL || $value === "") {
             // do nothing
         } else {
             $this->where("{$property} LIKE ?", addslashes($value) .'%');
@@ -577,11 +588,11 @@ class Teeple_ActiveRecord
      * 
      * @param string $property プロパティ名
      * @param mixed $value 値
-     * @return TeepleActiveRecord
+     * @return Teeple_ActiveRecord
      */
     public function ends($property, $value) {
         
-        if ($value == NULL || $value == "") {
+        if ($value === NULL || $value === "") {
             // do nothing
         } else {
             $this->where("{$property} LIKE ?", '%'. addslashes($value));
@@ -599,11 +610,11 @@ class Teeple_ActiveRecord
      * 
      * @param string $property プロパティ名
      * @param mixed $value 値
-     * @return TeepleActiveRecord
+     * @return Teeple_ActiveRecord
      */
     public function contains($property, $value) {
         
-        if ($value == NULL || $value == "") {
+        if ($value === NULL || $value === "") {
             // do nothing
         } else {
             $this->where("{$property} LIKE ?", '%'. addslashes($value) .'%');
@@ -615,7 +626,7 @@ class Teeple_ActiveRecord
      * order by を指定します。
      *
      * @param string $clause order by 句
-     * @return TeepleActiveRecord
+     * @return Teeple_ActiveRecord
      */
     public function order($clause) {
         
@@ -627,7 +638,7 @@ class Teeple_ActiveRecord
      * limit を指定します。
      *
      * @param int $num 最大件数
-     * @return TeepleActiveRecord
+     * @return Teeple_ActiveRecord
      */
     public function limit($num) {
         
@@ -641,7 +652,7 @@ class Teeple_ActiveRecord
      * offset を指定します。
      *
      * @param int $num 開始位置
-     * @return TeepleActiveRecord
+     * @return Teeple_ActiveRecord
      */
     public function offset($num) {
         
@@ -694,7 +705,7 @@ class Teeple_ActiveRecord
      * 単一行の検索を実行します。
      *
      * @param mixed $id 配列で無い場合は、単一PKの値として扱います。配列の場合は、カラム名 => 値 のHashとして扱います。
-     * @return TeepleActiveRecord
+     * @return Teeple_ActiveRecord
      */
     public function find($id=null) {
         
@@ -776,7 +787,7 @@ class Teeple_ActiveRecord
         $count = $sth->fetchColumn();
         $this->_log->debug("count result: $count");
         
-        $this->resetInstance();
+        //$this->resetInstance();
         return $count;
     }
 
@@ -793,6 +804,10 @@ class Teeple_ActiveRecord
      */
     public function insert()
     {
+        if (function_exists('teeple_activerecord_before_insert')) {
+            teeple_activerecord_before_insert($this);
+        }
+
         $this->_bindvalue = array();
         $row = $this->_convertObject2Array($this, true);
         $this->_log->info("insert ". $this->_tablename. ": \n".@var_export($row,TRUE));
@@ -814,7 +829,7 @@ class Teeple_ActiveRecord
             throw new TeepleActiveRecordException("pdo execute failed: {$err[2]}:{$sql}");
         }
 
-        if (count($this->_pk) == 1 && $this->_auto && ! isset($this->{$this->_pk[0]})) {
+        if (count($this->_pk) == 1 && $this->_auto && (! isset($this->{$this->_pk[0]}) || $this->{$this->_pk[0]} == "")) {
             $this->{$this->_pk[0]} = $this->_pdo->lastInsertId();
             $this->_log->info("AUTO: ". $this->_pk[0] ." = {$this->{$this->_pk[0]}}");
         }
@@ -836,6 +851,9 @@ class Teeple_ActiveRecord
      */
     public function update()
     {
+        if (function_exists('teeple_activerecord_before_update')) {
+            teeple_activerecord_before_update($this);
+        }
         $this->_bindvalue = array();
         if (! $this->isSetPk()) {
             throw new TeepleActiveRecordException("primary key not set.");
@@ -872,6 +890,10 @@ class Teeple_ActiveRecord
         
         $this->_log->info("update ". $this->_tablename .": result=(".$sth->rowCount().")");
         
+        if ($sth->rowCount() != 1) {
+            throw new TeepleActiveRecordException('更新に失敗しました。他の処理と重なった可能性があります。');
+        }
+        
         $this->resetInstance();
         return $sth->rowCount();
     }
@@ -888,6 +910,10 @@ class Teeple_ActiveRecord
      */
     public function updateAll()
     {
+        if (function_exists('teeple_activerecord_before_update')) {
+            teeple_activerecord_before_update($this);
+        }
+         
         $this->_bindvalue = array();
         
         $row = $this->_convertObject2Array($this, true);
@@ -1127,6 +1153,14 @@ class Teeple_ActiveRecord
     }
     
     /**
+     * 現在の時刻を返します。
+     * @return string 
+     */
+    public function now() {
+        return date('Y-m-d H:i:s');
+    }
+    
+    /**
      * SELECT文を構築します。
      *
      * @return String SELECT文
@@ -1254,8 +1288,8 @@ class Teeple_ActiveRecord
         }
         
         if (count($buff)) {
-            return "WHERE ". implode(" \n AND ", $buff);
-        }
+            return "WHERE (". implode(") \n AND (", $buff) .")";
+        }        
         return "";
     }
 
@@ -1294,19 +1328,16 @@ class Teeple_ActiveRecord
         
         $buff = array();
         
+        // ORDER BYから書かないとだめ！
         if (count($this->_afterwhere)) {
-            foreach($this->_afterwhere as $key => $val) {
-                switch($key) {
-                    case 'order':
-                        $buff[] = "ORDER BY {$val}";
-                        break;
-                    case 'limit':
-                        $buff[] = "LIMIT {$val}";
-                        break;
-                    case 'offset':
-                        $buff[] = "OFFSET {$val}";
-                        break;
-                }
+            if (isset($this->_afterwhere['order'])) {
+                $buff[] = "ORDER BY {$this->_afterwhere['order']}";
+            }
+            if (isset($this->_afterwhere['limit'])) {
+                $buff[] = "LIMIT {$this->_afterwhere['limit']}";
+            }
+            if (isset($this->_afterwhere['offset'])) {
+                $buff[] = "OFFSET {$this->_afterwhere['offset']}";
             }
         }
         
@@ -1450,7 +1481,7 @@ class Teeple_ActiveRecord
     /**
      * Entityのカラム値をArrayとして取り出す
      *
-     * @param TeepleActiveRecord $obj
+     * @param Teeple_ActiveRecord $obj
      * @param boolean $excludeNull
      * @return array
      */
@@ -1460,8 +1491,10 @@ class Teeple_ActiveRecord
         $result = array();
         foreach ($columns as $name) {
             $val = $obj->$name;
-            if (! $excludeNull || ($val != NULL && strlen($val) > 0)) {
-                $result[$name] = $val;
+            if (@is_array($val)) {
+                $result[$name] = serialize($val);
+            } else if (! $excludeNull || ($val !== NULL && strlen($val) > 0)) {
+                $result[$name] = $this->_null($val);
             }
         }
 
@@ -1495,6 +1528,10 @@ class Teeple_ActiveRecord
         }
         
         return $result;
+    }
+
+    protected function _null($str) {
+        return $str !== NULL && strlen($str) > 0 ? $str : NULL;
     }
 
 }

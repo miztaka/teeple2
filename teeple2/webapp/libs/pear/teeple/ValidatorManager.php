@@ -84,7 +84,37 @@ class Teeple_ValidatorManager
     public function __construct() {
         $this->log = LoggerManager::getLogger(get_class($this));
     }
-
+    
+    /**
+     * YAML形式の設定をパースします。
+     * @param $yaml YAML形式の文字列
+     * @return array config
+     */
+    public function parseYAML($yaml) {
+        
+        $yamlConfig = Horde_Yaml::load($yaml);
+        if (! is_array($yamlConfig)) {
+            throw new Teeple_Exception("Validationの設定を解析できませんでした。");
+        }
+        //$this->log->debug(var_export($yamlConfig, true));
+        
+        $validationConfig = array();
+        foreach($yamlConfig as $field => $validations) {
+            $oneConfig = array();
+            $fields = explode('.',$field, 2);
+            if (count($fields) == 2) {
+                $oneConfig['label'] = $fields[1];
+            }
+            $oneConfig['name'] = $fields[0];
+            $oneConfig['validation'] = $validations;
+            
+            array_push($validationConfig, $oneConfig);
+        }
+        //$this->log->debug(var_export($validationConfig, true));
+        
+        return $validationConfig;
+    }
+        
     /**
      * 指定されたconfigでバリデーションを実行します。
      * エラーがあった場合はエラーメッセージを組み立てて

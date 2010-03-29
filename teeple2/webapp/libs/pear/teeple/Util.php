@@ -69,6 +69,9 @@ class Teeple_Util {
      */
     public static function isBlank($value, $trim = TRUE) {
         
+        if (is_array($value)) {
+            return (count($value) == 0);
+        }
         if ($trim) {
             $value = trim($value);
         }

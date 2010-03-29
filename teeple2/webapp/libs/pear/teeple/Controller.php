@@ -96,6 +96,8 @@ class Teeple_Controller
             $request = $session->getParameter("__REDIRECT_SCOPE_REQUEST");
             if (is_object($request)) {
                 $request->setActionMethod("execute");
+                $request->resetCompleteFlag();
+                $request->isRedirect = TRUE;
                 $container->register("Teeple_Request", $request);
                 $session->removeParameter("__REDIRECT_SCOPE_REQUEST");
             }
@@ -151,7 +153,12 @@ class Teeple_Controller
             if (defined('USE_DEVHELPER') && USE_DEVHELPER) {
                 $this->devhelper->execute($actionName);
             } else {
-                throw $e;
+                // TODO 本当の404だけを見分ける
+                $this->log->warn($e->getMessage());
+                // 404で終了する
+                header("HTTP/1.1 404 Not Found");
+                print('Page Not Found');
+                return;
             }
         }
         

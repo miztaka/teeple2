@@ -271,26 +271,7 @@ class Teeple_ActionChain
             }
         }
         
-        $yamlConfig = Horde_Yaml::load(constant($className."::VALIDATION_CONFIG"));
-        if (! is_array($yamlConfig)) {
-            throw new Teeple_Exception("Validationの設定を解析できませんでした。");
-        }
-        $this->log->debug(var_export($yamlConfig, true));
-        
-        $validationConfig = array();
-        foreach($yamlConfig as $field => $validations) {
-            $oneConfig = array();
-            $fields = explode('.',$field, 2);
-            if (count($fields) == 2) {
-                $oneConfig['label'] = $fields[1];
-            }
-            $oneConfig['name'] = $fields[0];
-            $oneConfig['validation'] = $validations;
-            
-            array_push($validationConfig, $oneConfig);
-        }
-        $this->log->debug(var_export($validationConfig, true));
-        
+        $validationConfig = $this->validatorManager->parseYAML(constant($className."::VALIDATION_CONFIG"));
         if (! $this->validatorManager->execute($action, $validationConfig)) {
             $this->request->setFilterError('Validate');
         }
@@ -315,7 +296,7 @@ class Teeple_ActionChain
         if (! is_array($yamlConfig)) {
             throw new Teeple_Exception("Converterの設定を解析できませんでした。");
         }
-        $this->log->debug(var_export($yamlConfig, true));
+        //$this->log->debug(var_export($yamlConfig, true));
         
         $this->converterManager->execute($params, $yamlConfig);
     }

@@ -81,6 +81,27 @@ abstract class Teeple_ActionBase {
         return NULL;
     }
     
+    /**
+     * 404 not found を返したいときに使用します。
+     * @return string
+     */
+    public function exit404($message = 'Page Not Found.') {
+        
+        header("HTTP/1.1 404 Not Found");
+        print($message);
+        $this->request->completeResponse();
+        return NULL;
+    }   
+
+    /**
+     * TeepleActionにリダイレクトします。(リクエストを引継ぎます)
+     * @param string $actionName
+     * @return string
+     */
+    protected function redirect($actionName) {
+        return "redirect:{$actionName}";
+    }    
+    
 }
 
 ?>
