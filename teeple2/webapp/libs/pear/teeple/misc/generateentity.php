@@ -222,6 +222,23 @@ EOT;
 class {$classname} extends {$baseclassname}
 {
     /**
+     * インスタンスを取得します。
+     * @return {$classname}
+     */
+    public static function get() {
+        return Teeple_Container::getInstance()->getEntity('{$classname}');
+    }
+    
+    /**
+     * 単一行の検索を実行します。
+     * @param \$id
+     * @return {$classname}
+     */
+    public function find(\$id=null) {
+        return parent::find(\$id);
+    }
+    
+    /**
      * JOINするテーブルを設定します。
      * ※generatorが吐き出した雛形を修正してください。
      * 
