@@ -96,7 +96,9 @@ class Teeple_Filter_View extends Teeple_Filter
                 $url = preg_replace("/^redirect:/", "", $template);
                 $url = trim($url);
                 $url = str_replace('_','/',$url);
-                $url = $_SERVER['SCRIPT_NAME'] .'/'. $url .'.html';
+                
+                $base = str_replace("/teeple_controller.php", "", $_SERVER['SCRIPT_NAME']);
+                $url = $base .'/'. $url .'.html';
                 $this->request->setFilterError(NULL);
                 // TODO 定数化
                 $this->session->setParameter("__REDIRECT_SCOPE_REQUEST", $this->request);

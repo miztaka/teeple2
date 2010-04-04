@@ -1,0 +1,5 @@
+RewriteEngine on
+RewriteBase /teeple2_test
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ teeple_controller.php/$1 [L]

@@ -35,7 +35,7 @@ if (!defined('PATH_SEPARATOR')) {
 }
 ini_set('include_path', BASE_DIR.'/libs/pear' . PATH_SEPARATOR . ini_get('include_path'));
 ini_set('include_path', BASE_DIR.'/components' . PATH_SEPARATOR . ini_get('include_path'));
-ini_set('include_path', BASE_DIR.'/htdocs/app' . PATH_SEPARATOR . ini_get('include_path'));
+ini_set('include_path', BASE_DIR.'/htdocs_app' . PATH_SEPARATOR . ini_get('include_path'));
 
 //
 //基本となる定数の読み込み
