@@ -1,14 +1,10 @@
 <?php
 
 /**
- * {$className}
+ * Sample_Hello
  */
-class {$className} extends MyActionBase
-{literal}{
-
-    public static function actionName() {
-        return strtolower(__CLASS__);
-    }
+class Sample_Hello extends MyActionBase
+{
 
     // 特定のメソッド時にValidationを実行したいときに定義。
     //const VALIDATION_TARGET = "";
@@ -19,10 +15,30 @@ class {$className} extends MyActionBase
     // Converterを実行したいときに定義。(ex. sample/Converter.php)
     //const CONVERTER_CONFIG = '';
     
+    // output
+    public $helloMessage;
+    public $example4;
+    
     /**
      * 標準で実行されるメソッドです。
      */
     public function execute() {
+        
+        $this->helloMessage = 'ようこそ、teepleへ!';
+        
+        if (isset($this->aaa) && isset($this->bbb)) {
+            $this->result = $this->aaa + $this->bbb;
+        }
+        
+        return NULL;
+    }
+
+    /**
+     * action:doExample4を実行します。
+     */
+    function doExample4() {
+        
+        $this->example4 = 'doExample4を実行しました。';
         return NULL;
     }
     
@@ -33,6 +49,6 @@ class {$className} extends MyActionBase
         return NULL;
     }
 
-}{/literal}
+}
 
 ?>

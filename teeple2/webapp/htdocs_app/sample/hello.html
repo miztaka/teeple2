@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>teeple exception page</title>
+</head>
+<body>
+<h3>例: 出力</h3>
+<form method="post" action="hello.html">
+<p>helloMessage: {{$a->helloMessage|escape}}</p>
+<hr/>
+<h3>例: 出力 2</h3>
+<input type="text" name="name" value="{{$a->name|escape}}" />
+<input type="submit" value="送信" />
+{{if $a->name != ""}}
+<p>こんにちは、 {{$a->name|escape}}さん</p>
+{{/if}}
+<hr />
+<h3>例: Requestパラメータの取得</h3>
+<input type="text" name="aaa" value="{{$a->aaa|escape}}" size="4" /> + 
+<input type="text" name="bbb" value="{{$a->bbb|escape}}" size="4" /> = 
+{{$a->result|escape}}
+<input type="submit" value="送信" />
+<hr />
+<h4>例: Actionメソッドの指定</h4>
+{{$a->example4|escape}}
+<input type="submit" value="doExample4メソッドを実行" name="action:doExample4" />
+</form>
+</body>
+</html>
