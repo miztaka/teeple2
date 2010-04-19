@@ -236,7 +236,12 @@ class Teeple_GlobalConfig
      */
     function loadFromFile($filename)
     {
-        if(!($arr = @parse_ini_file($filename, true))) {
+        if (defined('INI_SCANNER_RAW')) {
+            $arr = @parse_ini_file($filename, true, INI_SCANNER_RAW);
+        } else {
+            $arr = @parse_ini_file($filename, true);
+        }
+        if(! $arr) {
             throw new Teeple_Exception("iniファイルの読み込みに失敗しました。");
         }
         $this->importSections($arr);
