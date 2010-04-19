@@ -702,6 +702,23 @@ class Teeple_ActiveRecord
     }
     
     /**
+     * paginationに対応したSELECTをします。
+     * @param int $limit
+     * @param int $offset
+     * @return array [0]=全件数, [1]=limit,offsetに対応した結果セット(entityの配列)
+     */
+    public function selectPage($limit, $offset) {
+        
+        $total = $this->count();
+        if ($total == 0) {
+            return array(0, null);
+        }
+        $result = $this->limit($limit)->offset($offset)->select();
+        
+        return array($total, $result);
+    }
+    
+    /**
      * 単一行の検索を実行します。
      *
      * @param mixed $id 配列で無い場合は、単一PKの値として扱います。配列の場合は、カラム名 => 値 のHashとして扱います。
