@@ -51,6 +51,22 @@ abstract class Teeple_Filter
     }
     
     /**
+     * @var Teeple_Request
+     */
+    protected $request;
+    public function setComponent_Teeple_Request($c) {
+        $this->request = $c;
+    }
+    
+    /**
+     * @var Teeple_Session
+     */
+    protected $session;
+    public function setComponent_Teeple_Session($c) {
+        $this->session = $c;
+    }
+    
+    /**
      * コンストラクタ
      *
      */

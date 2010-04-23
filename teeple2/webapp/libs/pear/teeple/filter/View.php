@@ -31,22 +31,6 @@ class Teeple_Filter_View extends Teeple_Filter
     }
     
     /**
-     * @var Teeple_Session
-     */
-    private $session;
-    public function setComponent_Teeple_Session($c) {
-        $this->session = $c;
-    }
-
-    /**
-     * @var Teeple_Request
-     */
-    private $request;
-    public function setComponent_Teeple_Request($c) {
-        $this->request = $c;
-    }
-    
-    /**
      * @var Teeple_Token
      */
     private $token;

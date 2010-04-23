@@ -71,6 +71,13 @@ class Teeple_DataSource {
 		}
 	}
 	
+	/**
+	 * DataSourceの設定を取得します。
+	 */
+	public function getDataSourceConfig() {
+	    return self::$ds;
+	}
+	
 }
 
 ?>

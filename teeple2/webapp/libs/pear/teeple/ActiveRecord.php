@@ -340,7 +340,11 @@ class Teeple_ActiveRecord
         }
         
         $this->_checkPlaceHolder($where_clause, $args_ar);
-        $this->_criteria[$where_clause] = $args_ar;
+        //$this->_criteria[$where_clause] = $args_ar;
+        $this->_criteria[] = array(
+            'str' => $where_clause,
+            'val' => $args_ar
+        );
         
         return $this;
     }
@@ -1292,7 +1296,10 @@ class Teeple_ActiveRecord
         
         // criteria
         if (count($this->_criteria)) {
-            foreach($this->_criteria as $str => $val) {
+            //foreach($this->_criteria as $str => $val) {
+            foreach($this->_criteria as $cri) {
+                $str = $cri['str'];
+                $val = $cri['val'];
                 $buff[] = $str;
                 if ($val != null) {
                     if (is_array($val)) {

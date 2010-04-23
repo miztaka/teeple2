@@ -20,7 +20,7 @@ include_once dirname(__FILE__) .'/teeple.inc.php';
 //
 // Action自動生成機能のON/OFF
 //
-define('USE_DEVHELPER', false);
+define('USE_DEVHELPER', true);
 
 //
 //Smartyテンプレートの設定

@@ -24,14 +24,6 @@ class Teeple_Filter_Session extends Teeple_Filter
 {
     
     /**
-     * @var Teeple_Session
-     */
-    private $session;
-    public function setComponent_Teeple_Session($c) {
-        $this->session = $c;
-    }
-    
-    /**
      * @var array
      */
     private $modeArray;

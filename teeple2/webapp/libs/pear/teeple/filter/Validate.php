@@ -32,14 +32,6 @@ class Teeple_Filter_Validate extends Teeple_Filter
     }
     
     /**
-     * @var Teeple_Request
-     */
-    private $request;
-    public function setComponent_Teeple_Request($c) {
-        $this->request = $c;
-    }
-
-    /**
      * コンストラクタ
      *
      */
