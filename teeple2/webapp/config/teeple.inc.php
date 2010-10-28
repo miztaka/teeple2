@@ -41,6 +41,7 @@ ini_set('include_path', BASE_DIR.'/htdocs_app' . PATH_SEPARATOR . ini_get('inclu
 //基本となる定数の読み込み
 //
 Teeple_GlobalConfig::loadConstantsFromFile(dirname(__FILE__) .'/constants.ini');
+mb_internal_encoding(INTERNAL_CODE);
 
 //
 // 基本クラスの読み込み
@@ -58,6 +59,9 @@ function loadComponentClass($name) {
 }
 function __autoload($clsname) {
     loadComponentClass($clsname);
+}
+if (function_exists('spl_autoload_register')) {
+    spl_autoload_register('loadComponentClass');
 }
 
 ?>
