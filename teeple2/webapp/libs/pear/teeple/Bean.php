@@ -3,6 +3,7 @@
 /**
  * 汎用BEANクラスです。
  * @author miztaka
+ * @package teeple
  *
  */
 class Teeple_Bean
