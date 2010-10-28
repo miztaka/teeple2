@@ -24,12 +24,12 @@ class Teeple_Controller
     /**
      * @var Logger
      */
-    private $log;
+    protected $log;
     
     /**
      * @var Teeple_ActionChain
      */
-    private $actionChain;
+    protected $actionChain;
     public function setComponent_Teeple_ActionChain($c) {
         $this->actionChain = $c;
     }
@@ -37,7 +37,7 @@ class Teeple_Controller
     /**
      * @var Teeple_ConfigUtils 
      */
-    private $configUtils;
+    protected $configUtils;
     public function setComponent_Teeple_ConfigUtils($c) {
         $this->configUtils = $c;
     }
@@ -45,31 +45,31 @@ class Teeple_Controller
     /**
      * @var Teeple_FilterChain
      */
-    private $filterChain;
+    protected $filterChain;
     public function setComponent_Teeple_FilterChain($c) {
         $this->filterChain = $c;
     }
     
     /**
-     * @var Teeple_DevHelper
-     */
-    private $devhelper;
-    public function setComponent_Teeple_DevHelper($c) {
-        $this->devhelper = $c;
-    }
-    
-    /**
      * @var Teeple_TransactionManager
      */
-    private $txManager;
+    protected $txManager;
     public function setComponent_Teeple_TransactionManager($c) {
         $this->txManager = $c;
     }
     
     /**
+     * @var Teeple_ControllerHook
+     */
+    protected $hook;
+    public function setComponent_Teeple_ControllerHook($c) {
+        $this->hook = $c;
+    }
+    
+    /**
      * @var Teeple_Container
      */
-    private $container;
+    protected $container;
     public function setComponent_container($c) {
         $this->container = $c;
     }
@@ -139,7 +139,7 @@ class Teeple_Controller
         $this->container->register('DefaultTx', $defaultTx);
 
         // 実行するActionを決定
-        $actionName = $this->makeActionName();
+        $actionName = $this->hook->makeActionName();
         if ($actionName == NULL) {
             throw new Teeple_Exception("アクションが特定できません。");
         }
@@ -149,15 +149,9 @@ class Teeple_Controller
         try {
             $this->actionChain->add($actionName);
         } catch (Exception $e) {
-            // Action自動生成ヘルパー TODO Controllerに組み込むのは味が悪い
-            if (defined('USE_DEVHELPER') && USE_DEVHELPER) {
-                $this->devhelper->execute($actionName);
-            } else {
-                // TODO 本当の404だけを見分ける
-                $this->log->warn($e->getMessage());
-                // 404で終了する
-                header("HTTP/1.1 404 Not Found");
-                print('Page Not Found');
+            $this->log->warn($e->getMessage());
+            $isContinue = $this->hook->actionClassNotFound($actionName);
+            if (! $isContinue) {
                 return;
             }
         }
@@ -168,25 +162,6 @@ class Teeple_Controller
         //$this->filterChain->clear();
     }
     
-    /**
-     * URIからAction名を特定します。
-     *
-     * @return string
-     */
-    private function makeActionName() {
-        $path = $_SERVER['PATH_INFO'];
-        if ($path == NULL || strlen($path) == 0 || $path == '/') {
-            return 'index';
-        }
-        if ($path{strlen($path)-1} == '/') {
-            $path .= "index.html";
-        }
-        $path = preg_replace('/^\/?(.*)$/', '$1', $path);
-        $path = preg_replace('/(\..*)?$/', '', $path);
-        $path = str_replace('/','_',$path);
-        
-        return $path;        
-        
-    }
 }
+
 ?>

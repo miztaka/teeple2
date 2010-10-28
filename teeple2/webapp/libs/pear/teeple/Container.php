@@ -26,6 +26,12 @@ class Teeple_Container
     const SESSION_KEY = '__SESSION_COMPONENTS';
     
     /**
+     * コンポーネントのクラス名を変更したいときに定義します。
+     * @var array
+     */
+    public static $namingDefs = array();
+    
+    /**
      * Teeple_Container
      * @var unknown_type
      */
@@ -41,7 +47,7 @@ class Teeple_Container
      * 設定内容を保持する配列
      * @var array
      */
-    protected $_dicon = array();
+    //protected $_dicon = array();
     
     /**
      * @var Logger
@@ -76,6 +82,7 @@ class Teeple_Container
      *
      * @param string $configfile
      */
+    /*
     public function setup($configfile) {
 
         $config = parse_ini_file($configfile, TRUE);
@@ -92,6 +99,7 @@ class Teeple_Container
         }
         
     }
+    */
     
     /**
      * ContainerにComponentのインスタンスをセット
@@ -187,8 +195,9 @@ class Teeple_Container
         $this->log->debug("コンポーネント {$name} を作成します。");
 
         // インスタンスを作成
-        if (isset($this->_dicon[$name])) {
-            $className = $this->_dicon[$name]['class'];
+        if (isset(self::$namingDefs[$name])) {
+            $className = self::$namingDefs[$name];
+            $this->log->debug("クラス名は {$className}です。");
         } else {
             $className = $name;
         }
