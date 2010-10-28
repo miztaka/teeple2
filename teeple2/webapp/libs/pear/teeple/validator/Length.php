@@ -40,11 +40,11 @@ class Teeple_Validator_Length extends Teeple_Validator
             return TRUE;
         }
         
-        if (! Teeple_Util::isBlank($this->minlength) && $this->minlength > mb_strlen($value)) {
+        if (! Teeple_Util::isBlank($this->minlength) && $this->minlength > mb_strlen($value, INTERNAL_CODE)) {
             return FALSE;
         }
         
-        if (! Teeple_Util::isBlank($this->maxlength) && $this->maxlength < mb_strlen($value)) {
+        if (! Teeple_Util::isBlank($this->maxlength) && $this->maxlength < mb_strlen($value, INTERNAL_CODE)) {
             return FALSE;
         }
 

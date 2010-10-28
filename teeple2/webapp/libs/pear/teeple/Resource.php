@@ -23,6 +23,13 @@
 class Teeple_Resource {
     
     /**
+     * @return Teeple_Resource
+     */
+    public static function instance() {
+        return Teeple_Container::getInstance()->getComponent(__CLASS__);
+    }
+    
+    /**
      * Resourceを保持する配列です
      *
      * @var array

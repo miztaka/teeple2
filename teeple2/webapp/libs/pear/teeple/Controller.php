@@ -178,11 +178,15 @@ class Teeple_Controller
         if ($path == NULL || strlen($path) == 0 || $path == '/') {
             return 'index';
         }
+        if ($path{strlen($path)-1} == '/') {
+            $path .= "index.html";
+        }
         $path = preg_replace('/^\/?(.*)$/', '$1', $path);
         $path = preg_replace('/(\..*)?$/', '', $path);
         $path = str_replace('/','_',$path);
         
-        return $path;
+        return $path;        
+        
     }
 }
 ?>

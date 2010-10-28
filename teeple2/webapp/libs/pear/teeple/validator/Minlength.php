@@ -43,7 +43,7 @@ class Teeple_Validator_Minlength extends Teeple_Validator
             throw new Teeple_Exception("minlengthが正しくセットされていません。");
         }
         
-        return $this->minlength <= mb_strlen($value);
+        return $this->minlength <= mb_strlen($value, INTERNAL_CODE);
     }
     
 }

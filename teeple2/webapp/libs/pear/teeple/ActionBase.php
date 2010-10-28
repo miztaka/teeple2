@@ -74,6 +74,16 @@ abstract class Teeple_ActionBase {
         $this->log = LoggerManager::getLogger(get_class($this));
     }
 
+    /**
+     * エンティティに定義されているoptionsの定義を取得します。
+     * @param string $table
+     * @param string $column
+     */
+    public function getOptions($table, $column) {
+        $ref = new ReflectionClass('Entity_'.$table);
+        return $ref->getStaticPropertyValue('_'.$column.'Options');
+    }
+        
     public function __get($name) {
         if (preg_match('/^Entity_/', $name) && isset($this->defaultTx)) {
             return $this->defaultTx->$name;

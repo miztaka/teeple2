@@ -88,7 +88,8 @@ class Teeple_Transaction {
         foreach($this->connection as $name => $conn) {
             $conn->commit();
         }
-        $this->isclose = true;
+        //$this->isclose = true;
+        $this->isstart = false;
         $this->log->info("トランザクションをコミットしました。");        
         return;
     }

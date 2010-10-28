@@ -23,6 +23,13 @@
 class Teeple_Request
 {
     /**
+     * @return Teeple_Request
+     */
+    public static function instance() {
+        return Teeple_Container::getInstance()->getComponent(__CLASS__);
+    }
+    
+    /**
      * POT/GETで受け取った値を保持する
      * @var array
      */
@@ -211,6 +218,14 @@ class Teeple_Request
     }
     
     /**
+     * 指定されたtargetのエラーがあるかどうか
+     * @param string $target
+     */
+    public function hasError($target) {
+        return isset($this->errorList[$target]);
+    }    
+    
+    /**
      * 全てのエラーメッセージを取得します。
      *
      * @return array
@@ -293,5 +308,14 @@ class Teeple_Request
         $this->completeResponseFlg = FALSE;
     }    
 
+    /**
+     * HTTPSかどうか
+     */
+    public function isHttps() {
+        return isset($_SERVER['HTTPS']) 
+            && ! Teeple_Util::isBlank($_SERVER['HTTPS'])
+            && $_SERVER['HTTPS'] !== 'off';
+    }
+        
 }
 ?>

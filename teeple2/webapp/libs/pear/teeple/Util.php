@@ -175,6 +175,34 @@ class Teeple_Util {
         }
         return array();
     }
+    
+    /**
+     * アクション名から絶対URLを取得します。
+     * @param string $actionName
+     * @param bool $isHttps
+     * @return string
+     */
+    public static function getAbsoluteUrlFromActionName($actionName, $isHttps) {
+        
+        $uri = str_replace('_','/',$actionName);
+        $base = str_replace("/teeple_controller.php", "", $_SERVER['SCRIPT_NAME']);
+        $uri = $base .'/'. $uri .'.html';
+        
+        $url = $isHttps ? 'https://' : 'http://';
+        $url .= str_replace(":443", "", $_SERVER["HTTP_HOST"]);
+        $url .= $uri;
+        
+        return $url;
+    }
+    
+    public static function getBaseUrl($isHttps) {
+        
+        $base = str_replace("/teeple_controller.php", "", $_SERVER['SCRIPT_NAME']);
+        $url = $isHttps ? 'https://' : 'http://';
+        $url .= str_replace(":443", "", $_SERVER["HTTP_HOST"]);
+        $url .= $base;
+        return $url;
+    }
 
 }
 ?>

@@ -22,6 +22,12 @@
  */
 class Teeple_Session
 {
+    /**
+     * @return Teeple_Session
+     */
+    public static function instance() {
+        return Teeple_Container::getInstance()->getComponent(__CLASS__);
+    }
 
     /**
      * 設定されている値を返却
@@ -84,6 +90,9 @@ class Teeple_Session
         }
         @session_start();
         //@session_regenerate_id(true);
+        if (! isset($_SERVER['HTTP_REFERER']) || strpos($_SERVER['HTTP_REFERER'], $_SERVER['HTTP_HOST']) === FALSE) {
+            @session_regenerate_id(true);
+        }
     }
 
     /**

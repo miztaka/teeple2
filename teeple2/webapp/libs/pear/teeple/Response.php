@@ -23,6 +23,13 @@
 class Teeple_Response
 {
     /**
+     * @return Teeple_Response
+     */
+    public static function instance() {
+        return Teeple_Container::getInstance()->getComponent(__CLASS__);
+    }
+        
+    /**
      * @var Content-dispositionを保持する
      *
      * @access  private

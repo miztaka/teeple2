@@ -931,8 +931,8 @@ class Teeple_ActiveRecord
      */
     public function updateAll()
     {
-        if (function_exists('teeple_activerecord_before_update')) {
-            teeple_activerecord_before_update($this);
+        if (function_exists('teeple_activerecord_before_updateAll')) {
+            teeple_activerecord_before_updateAll($this);
         }
          
         $this->_bindvalue = array();

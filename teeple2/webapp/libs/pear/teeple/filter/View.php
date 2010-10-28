@@ -79,10 +79,7 @@ class Teeple_Filter_View extends Teeple_Filter
             } else if (preg_match("/^redirect:/", $template)) {
                 $url = preg_replace("/^redirect:/", "", $template);
                 $url = trim($url);
-                $url = str_replace('_','/',$url);
-                
-                $base = str_replace("/teeple_controller.php", "", $_SERVER['SCRIPT_NAME']);
-                $url = $base .'/'. $url .'.html';
+                $url = Teeple_Util::getAbsoluteUrlFromActionName($url, $this->request->isHttps());
                 $this->request->setFilterError(NULL);
                 // TODO 定数化
                 $this->session->setParameter("__REDIRECT_SCOPE_REQUEST", $this->request);
@@ -138,7 +135,7 @@ class Teeple_Filter_View extends Teeple_Filter
      */
     private function redirect($url) {
         
-        if (! isset($_COOKIE[session_name()])) {
+        if (! isset($_COOKIE[session_name()]) && session_id() != "") {
             if (strpos($url, '?') === FALSE) {
                 $url .= '?';
             } else {

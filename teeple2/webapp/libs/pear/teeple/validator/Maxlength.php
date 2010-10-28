@@ -43,7 +43,7 @@ class Teeple_Validator_Maxlength extends Teeple_Validator
             throw new Teeple_Exception("maxlengthが正しくセットされていません。");
         }
         
-        return $this->maxlength >= mb_strlen($value);
+        return $this->maxlength >= mb_strlen($value, INTERNAL_CODE);
     }
     
 }
