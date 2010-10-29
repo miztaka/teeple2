@@ -47,7 +47,7 @@ class Teeple_DataSource {
 	 * 指定されたDB名のConnectionを取得します。
 	 * 
 	 * @param dbname string DB名
-	 * @return Object DBConnオブジェクト 
+	 * @return Teeple_DBConn DBConnオブジェクト 
 	 */	
 	public function getConnection($dbname) {
 

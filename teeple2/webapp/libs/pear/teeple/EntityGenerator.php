@@ -28,6 +28,13 @@ class Teeple_EntityGenerator {
      * @var Logger
      */
     protected $log;
+    
+    /**
+     * ファイルが存在したときに上書きするか？
+     * TRUEの場合はEntity_Base_* のみ上書き対応。
+     * @var bool
+     */
+    protected $forceUpdate = FALSE;
 
     /**
      * @var Teeple_DataSource
@@ -49,6 +56,12 @@ class Teeple_EntityGenerator {
      * 
      */
     public function execute() {
+        
+        // --force フラグのチェック
+        if (isset($this->_argv) && in_array('--force', $this->_argv)) {
+            $this->forceUpdate = TRUE;
+        }
+        
         $config = $this->dataSource->getDataSourceConfig();
         foreach ($config as $name => $dsn) {
             $this->generate($name, $this->convertDSN($dsn));
@@ -168,7 +181,7 @@ EOT;
 
             // ベースクラスの作成
             $filepath = $outputdir ."/base/{$capName}.php";
-            if (file_exists($filepath)) {
+            if (file_exists($filepath) && ! $this->forceUpdate) {
                 print "{$tablename}: base class already exists. \n";
                 continue;
             }
