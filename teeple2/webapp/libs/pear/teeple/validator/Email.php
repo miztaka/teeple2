@@ -30,7 +30,15 @@ class Teeple_Validator_Email extends Teeple_Validator
             return TRUE;
         }
         
-        return preg_match("/^[a-zA-Z0-9\"\._\?\+\/-]+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/", $value);
+        $atom       = "(?:[a-zA-Z0-9_!#\\\$\\%&'*+/=?\\^`{}~|\\-]+)";
+        $dot_atom   = "(?:{$atom}(?:\\.{$atom})*)";
+        $quoted     = '(?:"(?:\\\\[^\r\n]|[^\\\\"])*")';
+        $local      = "(?:{$dot_atom}|{$quoted})";
+        $domain_lit = '(?:\[(?:\\\\\\S|[\x21-\x5a\x5e-\x7e])*\])';
+        $domain     = "(?:{$dot_atom}|{$domain_lit})";
+        $addr_spec  = "{$local}\\@{$domain}";
+        
+        return preg_match("/^{$addr_spec}$/", $value);
     }
     
 }
