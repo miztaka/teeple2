@@ -30,7 +30,7 @@ class Teeple_Validator_Email extends Teeple_Validator
             return TRUE;
         }
         
-        $atom       = "(?:[a-zA-Z0-9_!#\\\$\\%&'*+/=?\\^`{}~|\\-]+)";
+        $atom       = "(?:[a-zA-Z0-9_!#\\\$\\%&'*+\\/=?\\^`{}~|\\-]+)";
         $dot_atom   = "(?:{$atom}(?:\\.{$atom})*)";
         $quoted     = '(?:"(?:\\\\[^\r\n]|[^\\\\"])*")';
         $local      = "(?:{$dot_atom}|{$quoted})";
