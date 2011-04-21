@@ -100,7 +100,8 @@ class Teeple_ActionChain
         // Actionクラスのインスタンス化
         $className = Teeple_Util::capitalizedClassName($name);
         $action = $this->container->getPrototype($className);
-        if (!is_object($action)) {
+        $base = 'Teeple_ActionBase';
+        if (!is_object($action) || ! $action instanceof $base) {
             throw new Teeple_Exception("Actionクラスの生成に失敗しました。({$className})");
         }
 
