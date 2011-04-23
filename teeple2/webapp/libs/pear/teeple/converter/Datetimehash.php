@@ -45,6 +45,9 @@ class Teeple_Converter_Datetimehash extends Teeple_Converter
             throw new Teeple_Exception("targetが指定されていません。");
         }
         
+        // 初期化
+        Teeple_Util::setProperty($obj, $this->target, "");
+        
         $value = Teeple_Util::getProperty($obj, $fieldName);
         if (! is_array($value) || count($value) < 3) {
             return FALSE;
@@ -57,6 +60,11 @@ class Teeple_Converter_Datetimehash extends Teeple_Converter
             $h = isset($value['Hour']) ? $value['Hour'] : 0;
             $i = isset($value['Minute']) ? $value['Minute'] : 0;
             $s = isset($value['Second']) ? $value['Second'] : 0;
+            
+            if (!is_numeric($y) || !is_numeric($m) || !is_numeric($d) ||
+                !is_numeric($h) || !is_numeric($i) || !is_numeric($s)) {
+                return FALSE;
+            }
             
             $time = mktime($h, $i, $s, $m, $d, $y);
             if ($time !== FALSE) {

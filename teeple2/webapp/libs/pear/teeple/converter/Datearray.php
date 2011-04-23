@@ -44,6 +44,9 @@ class Teeple_Converter_Datearray extends Teeple_Converter
             throw new Teeple_Exception("targetが指定されていません。");
         }
         
+        // 初期化
+        Teeple_Util::setProperty($obj, $this->target, "");
+        
         $value = Teeple_Util::getProperty($obj, $fieldName);
         if (! is_array($value) || count($value) != 3) {
             return FALSE;

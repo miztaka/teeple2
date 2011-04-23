@@ -37,6 +37,12 @@ class Teeple_Validator_Datetimehash extends Teeple_Validator
         $hour   = $value['Hour'];
         $minute = $value['Minute'];
         $second = isset($value['Second']) ? $second = $value['Second'] : '00';
+        
+        // 全部空だったらTRUE
+        if (Teeple_Util::isBlank($year) && Teeple_Util::isBlank($month) && Teeple_Util::isBlank($day) &&
+            Teeple_Util::isBlank($hour) && Teeple_Util::isBlank($minute)) {
+            return TRUE;
+        }
 
         if (($year == "") || ($month == "") || ($day == "") || ($hour == "") || ($minute == "")) {
             return FALSE;

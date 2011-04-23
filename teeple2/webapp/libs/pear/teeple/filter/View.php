@@ -63,7 +63,7 @@ class Teeple_Filter_View extends Teeple_Filter
         $this->log->debug("view: $view");
         
         if ($view == "") {
-            $view = $_SERVER['PATH_INFO'];
+            $view = Teeple_Util::getPathInfo();
         }
 
         if ($view != "") {
@@ -97,7 +97,7 @@ class Teeple_Filter_View extends Teeple_Filter
                 if (is_object($this->request)) {
                     $renderer->setRequest($this->request);
                 }
-                $renderer->setScriptName($_SERVER['SCRIPT_NAME']);
+                $renderer->setScriptName(Teeple_Util::getScriptName());
                 
                 $result = $renderer->fetch($template);
                 if ($result == "") {

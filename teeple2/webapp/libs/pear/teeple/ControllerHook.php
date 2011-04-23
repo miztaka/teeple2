@@ -48,7 +48,7 @@ class Teeple_ControllerHook
      * @return string
      */
     public function makeActionName() {
-        $path = $_SERVER['PATH_INFO'];
+        $path = Teeple_Util::getPathInfo();
         if ($path == NULL || strlen($path) == 0 || $path == '/') {
             return 'index';
         }

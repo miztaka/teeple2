@@ -184,25 +184,55 @@ class Teeple_Util {
      */
     public static function getAbsoluteUrlFromActionName($actionName, $isHttps) {
         
+        $url = self::getBaseUrl($isHttps);
         $uri = str_replace('_','/',$actionName);
-        $base = str_replace("/teeple_controller.php", "", $_SERVER['SCRIPT_NAME']);
-        $uri = $base .'/'. $uri .'.html';
-        
-        $url = $isHttps ? 'https://' : 'http://';
-        $url .= str_replace(":443", "", $_SERVER["HTTP_HOST"]);
-        $url .= $uri;
-        
-        return $url;
+        return $url ."/{$uri}.html";
     }
     
+    /**
+     * アプリケーションの基底URLを http://から取得します。
+     * @param bool $isHttps
+     */
     public static function getBaseUrl($isHttps) {
         
-        $base = str_replace("/teeple_controller.php", "", $_SERVER['SCRIPT_NAME']);
+        $base = self::getBasePath();
         $url = $isHttps ? 'https://' : 'http://';
         $url .= str_replace(":443", "", $_SERVER["HTTP_HOST"]);
         $url .= $base;
         return $url;
     }
+    
+    /**
+     * アプリケーションの基底URIを取得します。
+     */
+    public static function getBasePath() {
+        $base = str_replace("/teeple_controller.php", "", Teeple_Util::getScriptName());
+        return $base;
+    }    
+    
+    /**
+     * PATH_INFOを取得します。
+     */
+    public static function getPathInfo() {
+        foreach (array('PATH_INFO','ORIG_PATH_INFO') as $key) {
+            if (isset($_SERVER[$key]) && strlen($_SERVER[$key])) {
+                return $_SERVER[$key];
+            }
+        }
+        throw new Exception("PATH_INFOが取得できません。");
+    }
+    
+    /**
+     * SCRIPT_NAMEを取得します。
+     */
+    public static function getScriptName() {
+        foreach (array('SCRIPT_NAME','ORIG_SCRIPT_NAME') as $key) {
+            if (isset($_SERVER[$key]) && strlen($_SERVER[$key])) {
+                return $_SERVER[$key];
+            }
+        }
+        throw new Exception("SCRIPT_NAMEが取得できません。");
+    }    
 
 }
 ?>

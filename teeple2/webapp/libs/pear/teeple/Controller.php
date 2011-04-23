@@ -80,7 +80,7 @@ class Teeple_Controller
      */
     public static function start() {
         
-        $log = LoggerManager::getLogger($_SERVER['PATH_INFO']);
+        $log = LoggerManager::getLogger(Teeple_Util::getPathInfo());
         $log->info("*** リクエストを開始します。");
         
         try {
