@@ -214,7 +214,7 @@ class Teeple_Util {
      * PATH_INFOを取得します。
      */
     public static function getPathInfo() {
-        foreach (array('PATH_INFO','ORIG_PATH_INFO') as $key) {
+        foreach (array('ORIG_PATH_INFO','PATH_INFO') as $key) {
             if (isset($_SERVER[$key]) && strlen($_SERVER[$key])) {
                 return $_SERVER[$key];
             }
@@ -226,7 +226,7 @@ class Teeple_Util {
      * SCRIPT_NAMEを取得します。
      */
     public static function getScriptName() {
-        foreach (array('SCRIPT_NAME','ORIG_SCRIPT_NAME') as $key) {
+        foreach (array('ORIG_SCRIPT_NAME','SCRIPT_NAME') as $key) {
             if (isset($_SERVER[$key]) && strlen($_SERVER[$key])) {
                 return $_SERVER[$key];
             }
