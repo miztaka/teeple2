@@ -219,6 +219,18 @@ class Teeple_Util {
                 return $_SERVER[$key];
             }
         }
+        // REQUEST_URIからBASE_PATHを引いて生成
+        if (isset($_SERVER['REQUEST_URI'])) {
+            $request_uri = $_SERVER['REQUEST_URI']; 
+            $base = self::getBasePath();
+            $len = strlen($base);
+            if ($len == 0) {
+                return $request_uri;
+            }
+            if (strpos($request_uri, $base) === 0) {
+                return substr($request_uri, $len);
+            }
+        }
         throw new Exception("PATH_INFOが取得できません。");
     }
     
