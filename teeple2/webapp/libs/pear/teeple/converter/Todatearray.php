@@ -46,6 +46,9 @@ class Teeple_Converter_Todatearray extends Teeple_Converter
         
         $result = array();
         $value = Teeple_Util::getProperty($obj, $fieldName);
+        if (Teeple_Util::isBlank($value)) {
+            return FALSE;
+        }
         
         list($y,$m,$d) = explode('-', $value);
         $result[0] = $y;

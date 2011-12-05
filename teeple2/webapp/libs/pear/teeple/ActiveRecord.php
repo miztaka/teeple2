@@ -667,16 +667,29 @@ class Teeple_ActiveRecord
     }
     
     /**
+     * group by を指定します。
+     *
+     * @param string $clause group by 句
+     * @return Teeple_ActiveRecord
+     */
+    public function group($clause) {
+        
+        $this->_afterwhere['group'] = addslashes($clause);
+        return $this;
+    }
+    
+    /**
      * SELECTを実行します。
      * 結果を配列で返します。
      *
+     * @param string $columns SELECT句を指定したい場合は指定できます。(書き方特殊)
      * @return array ResultSetをこのクラスの配列として返します。
      */
-    public function select() {
+    public function select($columns=NULL) {
         
         $this->_bindvalue = array();
         
-        $sql = $this->_buildSelectSql();
+        $sql = $this->_buildSelectSql($columns);
         $this->_log->debug("exec select: $sql");
         $this->_log->debug("param is: \n".@var_export($this->_bindvalue,TRUE));
         
@@ -1186,9 +1199,11 @@ class Teeple_ActiveRecord
      *
      * @return String SELECT文
      */
-    protected function _buildSelectSql() {
+    protected function _buildSelectSql($columns=NULL) {
         
-        $select_str = $this->_buildSelectClause();
+        $select_str = $columns == NULL ? 
+            $this->_buildSelectClause() :
+            "SELECT {$columns}";
         $from_str = $this->_buildFromClause();
         $where_str = $this->_buildWhereClause();
         $other_str = $this->_buildAfterWhereClause();
@@ -1354,6 +1369,9 @@ class Teeple_ActiveRecord
         
         // ORDER BYから書かないとだめ！
         if (count($this->_afterwhere)) {
+            if (isset($this->_afterwhere['group'])) {
+                $buff[] = "GROUP BY {$this->_afterwhere['group']}";
+            }
             if (isset($this->_afterwhere['order'])) {
                 $buff[] = "ORDER BY {$this->_afterwhere['order']}";
             }

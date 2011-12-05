@@ -24,7 +24,7 @@ class Teeple_Converter_Hankatakana extends Teeple_Converter_MbConvertBase
 {
     
     protected function convertMethod($value) {
-        return mb_convert_kana($value, "kh", INTERNAL_CODE);
+        return mb_convert_kana($value, "khs", INTERNAL_CODE);
     }
     
 }

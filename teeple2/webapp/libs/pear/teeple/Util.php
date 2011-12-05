@@ -244,7 +244,28 @@ class Teeple_Util {
             }
         }
         throw new Exception("SCRIPT_NAMEが取得できません。");
-    }    
+    }
+    
+    /**
+     * 文字列が指定された文字列で始まっているか
+     * @param $haystack
+     * @param $needle
+     */
+    public static function startsWith($haystack, $needle) {
+        $length = strlen($needle);
+        return (substr($haystack, 0, $length) === $needle);
+    }
+    
+    /**
+     * 文字列が指定された文字列で終わっているか
+     * @param $haystack
+     * @param $needle
+     */
+    public static function endsWith($haystack, $needle) {
+        $length = strlen($needle);
+        $start  = $length * -1; //negative
+        return (substr($haystack, $start) === $needle);
+    }
 
 }
 ?>
