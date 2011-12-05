@@ -106,11 +106,15 @@ class Teeple_EntityGenerator {
             }
 
             // primary key
+            $auto = 'FALSE';
             $pks = array();
             $pk = $tbl->getPrimaryKey();
             if (is_object($pk)) {
                 foreach($pk->getColumns() as $pkcol) {
                     $pks[] = strtolower($pkcol->getName());
+                    if ($pkcol->isAutoIncrement()) {
+                        $auto = 'TRUE';
+                    }
                 }
             }
 
@@ -245,7 +249,7 @@ class {$baseclassname} extends Teeple_ActiveRecord
      * 
      * @var bool 
      */
-    public static \$_AUTO = TRUE;
+    public static \$_AUTO = {$auto};
 
 }
 EOT;
